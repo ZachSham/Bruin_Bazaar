@@ -15,7 +15,8 @@ router.post("/register", async (req, res) => {
           error: "Username, email, and password are required"
         });
       }
-    // check if username/email/password contain leading or trailing spaces
+
+    // username/email/password cannot contain leading or trailling whitespace
     if (username !== username.trim()) {
       return res.status(400).json({
         ok: false,
@@ -44,7 +45,6 @@ router.post("/register", async (req, res) => {
           error: "Must use a UCLA email address"
         });
     }
-
     // 2. email must be unique
     if (await User.exists({ email })) {
       return res.status(409).json({
@@ -52,7 +52,8 @@ router.post("/register", async (req, res) => {
         error: "Email already in use"
       });
     }
-    // username must also be unique
+    // also check if username is valid with one condition
+    // 1. username must also be unique
     if (await User.exists({ username })) {
       return res.status(409).json({
         ok: false,
@@ -71,7 +72,7 @@ router.post("/register", async (req, res) => {
       userId: user._id
     });
 
-    } catch (err) { //catch any errors that occur
+    } catch (err) { 
     console.error(err);
     res.status(500).json({
       ok: false,
@@ -95,14 +96,14 @@ router.post("/login", async (req, res) => {
         
       
         let user = null;
-        // check if it has a @ucla.edu it is an email, otherwise it is a username 
+        // check if it has a @ucla.edu it is an email, if it doesn't it is a username 
         // set user = to the user object from the db if email/username exists
         if (identifier.endsWith("@ucla.edu")) {
             user = await User.findOne({ email: identifier }); // find one returns null if not found
           } else {
             user = await User.findOne({ username: identifier });
         }
-        // if null the username/email wasn't found
+        
         if (!user) {
             return res.status(400).json({
                 ok: false,
