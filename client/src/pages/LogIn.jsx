@@ -1,8 +1,8 @@
 import React from 'react';
-import Header from '../components/Header.jsx';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Login.css';
+import Header from '../components/Header';
 
 function LogIn() {
 
@@ -42,41 +42,46 @@ function LogIn() {
     }
 
     return (
-        <section>
-            <div className='login-page'>
-                <h2>Login</h2>
-                {error && <p style={{ color: 'red' }}>{error}</p>}
-                
-                <form className='login-form' method='post' onSubmit={handleSubmit}>
-                    <div>
-                        <label for='identifier'>Username or email</label><br />
-                        <input 
-                            type='text' 
-                            name='identifier'
-                            id='identifier' 
-                            placeholder='Enter your email or username' 
-                            required
-                            value={formData.identifier}
-                            onChange={handleChange}
-                        />
-                        <br />
-                        <br />
-                        <label for='password'>Password</label><br />
-                        <input 
-                            type='text' 
-                            id='password' 
-                            name='password'
-                            placeholder='Enter your password' 
-                            required
-                            value={formData.password}
-                            onChange={handleChange}
+        <>
+            <Header />
+            <section className='login-wrapper'>
+                <div className='login-page'>
+                    <h2>Login</h2>
+                    {error && <p style={{ color: 'red' }}>{error}</p>}
+
+                    <form className='login-form' method='post' onSubmit={handleSubmit}>
+                        <div>
+                            <label for='identifier'>Username or email</label><br />
+                            <input 
+                                type='text' 
+                                name='identifier'
+                                id='identifier' 
+                                placeholder='Enter your email or username' 
+                                required
+                                value={formData.identifier}
+                                onChange={handleChange}
+                                autoComplete='off'
                             />
-                    </div>
-                    <button type='submit'>Login</button>
-                </form>
-            </div>
-        </section>
-        
+                            <br />
+                            <br />
+                            <label for='password'>Password</label><br />
+                            <input 
+                                type='text' 
+                                id='password' 
+                                name='password'
+                                placeholder='Enter your password' 
+                                required
+                                value={formData.password}
+                                onChange={handleChange}
+                                autoComplete='off'
+                                />
+                        </div>
+                        <button type='submit'>Login</button>
+                        <p>Don't have an account? <a href='/register'>Register</a></p>
+                    </form>
+                </div>
+            </section>
+        </>
     );
 };
 export default LogIn;
