@@ -7,11 +7,19 @@ function Header() {
     return (
         <header className='header'>
             <nav className='nav'>
-                <Link to='/'><img className='logo' src={logo} alt='shopping cart'/></Link>
+                <div className='logo'>
+                    <Link to='/'><img src={logo} alt='shopping cart'/></Link>
+                    <Link to='/'><p>BruinBazaar</p></Link>
+                </div>
                 <ul>
+<<<<<<< HEAD
                     <li><Link to="/create">Create Listing</Link></li>
                     <li className='login'><Link to='/login'>Log In</Link></li>
                     <li className='Register'><Link to='/signup'>Register</Link></li>
+=======
+                    <li className='login'><Link to='/login'>Login</Link></li>
+                    <li className='Register'><Link to='/register'>Register</Link></li>
+>>>>>>> origin/main
                 </ul>
             </nav>
         </header>
