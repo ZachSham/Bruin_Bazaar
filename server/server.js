@@ -3,6 +3,8 @@ import express from 'express';
 import cors from 'cors';
 import { connectDB } from './connection.js';
 import authRoutes from './routes/auth.js';
+import viewRoutes from './routes/view.js';
+
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -14,6 +16,8 @@ app.get('/health', (req, res) => {
   res.json({ ok: true });
 });
 app.use('/auth', authRoutes);
+app.use('/listings', viewRoutes);
+
 
 connectDB().then(() => {
   app.listen(PORT, () => {

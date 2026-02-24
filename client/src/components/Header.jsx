@@ -9,6 +9,7 @@ function Header() {
             <nav className='nav'>
                 <Link to='/'><img className='logo' src={logo} alt='shopping cart'/></Link>
                 <ul>
+                    <li><Link to="/create">Create Listing</Link></li>
                     <li className='login'><Link to='/login'>Log In</Link></li>
                     <li className='Register'><Link to='/signup'>Register</Link></li>
                 </ul>
