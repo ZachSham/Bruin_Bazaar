@@ -7,9 +7,10 @@ const router = express.Router();
 
 ///// Create Listing /////
 
-router.post("/", async(req, res)=> {
+router.post("/", authMiddleware, async(req, res)=> {
     try{
         const {title, description, price} = req.body;
+        const seller = req.user._id;
 
     //Empty title, description, or price fields
         if (!title || !description || !price) {
@@ -24,6 +25,7 @@ router.post("/", async(req, res)=> {
             title,
             description,
             price,
+            seller,
         });
     //Save Listing object to DB
         const savedListing = await newListing.save();
@@ -49,13 +51,27 @@ router.get("/", async(req, res) => {
 });
 
 
+///// Get specific user's listings /////
+router.get("/seller/:sellerId", async(req, res) => {
+    try{
+        const seller = req.params.sellerId;
+        const listings = await Listing.find({seller: seller}).sort({createdAt: -1});
+        res.json(listings)
+    }
+    catch(err){
+        res.status(500).json({message: err.message});
+    }
+});
+
+
 ///// Delete Listing /////
 
 //id comes from url, so has to be included in url sent by frontend
-router.delete("/:id", async(req,res) =>{
+router.delete("/:listingId", authMiddleware, async(req,res) =>{
 
     try {
-        const id = req.params.id;
+        const id = req.params.listingId;
+        const userId = req.user._id;
 
         // Invalid ID
         if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -66,6 +82,12 @@ router.delete("/:id", async(req,res) =>{
         // ID doesnt match a Listing
         if (!listing){
             return (res.status(404).json({message: "Listing not found"}));
+        }
+
+        // Can't Delete someone else's listing
+
+        if (listing.seller.toString() != userId.toString()){
+            return (res.status(403).json({message: "Permission Denied"}));
         }
 
         await listing.deleteOne();
@@ -82,10 +104,10 @@ router.delete("/:id", async(req,res) =>{
 ///// Edit Listing /////
 
 //Also requires id from url
-router.patch("/:id", async(req, res) => {
+router.patch("/:listingId", async(req, res) => {
     
     try {
-        const id = req.params.id
+        const id = req.params.listingId
 
         // Invalid ID
         if (!mongoose.Types.ObjectId.isValid(id)) {
