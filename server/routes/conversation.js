@@ -1,5 +1,6 @@
 import express from "express";
 import mongoose from "mongoose";
+import { authenticateToken } from "../middleware/auth.js";
 import Conversation from "../models/conversations.js";
 import Listing from "../models/listings.js";
 
@@ -7,7 +8,7 @@ const router = express.Router();
 
 // GET /conversations/user/:userId
 // route to get all conversations for a user
-router.get("/", authMiddleware, async (req, res) => {
+router.get("/", authenticateToken, async (req, res) => {
     try {
       const userId = req.user._id;
   
@@ -23,7 +24,7 @@ router.get("/", authMiddleware, async (req, res) => {
 
   // GET /conversations/:conversationId
   // route to get a specific conversation username
-  router.get("/:conversationId", authMiddleware, async (req, res) => {
+  router.get("/:conversationId", authenticateToken, async (req, res) => {
     try {
       const { conversationId } = req.params;
       const userId = req.user._id;
@@ -55,9 +56,9 @@ router.get("/", authMiddleware, async (req, res) => {
 
 // POST /conversations/:listingId
 // route to start a new conversation
-  router.post("/:listingId", authMiddleware, async (req, res) => {
+  router.post("/:listingId", authenticateToken, async (req, res) => {
     const { listingId } = req.params;      // listingId from the URL
-    const userId = req.user._id;           // from authMiddleware
+    const userId = req.user._id;           // from authenticateToken
 
     const listing = await Listing.findById(listingId);
 
