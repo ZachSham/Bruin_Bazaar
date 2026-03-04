@@ -54,15 +54,28 @@ router.post("/:conversationId", authenticateToken, async(req, res)=> {
 
 ///// Get all messages in a converation /////
 
-router.get("/:conversationId", async(req, res) => {
+router.get("/:conversationId", authenticateToken, async(req, res) => {
 
     try {
 
         const conversationId = req.params.conversationId;
 
+        const user = req.user._id;
+
+
         if (!mongoose.Types.ObjectId.isValid(conversationId)) {
             return res.status(400).json({"message": "Invalid Conversation Id"})
         }
+
+        //validate user
+        const conversation = await Conversation.findById(conversationId).populate('participants');
+        if (!conversation){
+            return res.status(404).json({"message": "Conversation not Found"})
+        }
+        if (!conversation.participants.some(p => p._id.toString() === user.toString())){
+            return res.status(403).json({"message": "Access Denied"})
+        }
+
 
         //sort by converation
         const messages = await Message.find({conversation: conversationId}).sort({createdAt: -1});
