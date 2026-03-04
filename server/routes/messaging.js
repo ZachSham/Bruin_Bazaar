@@ -1,5 +1,6 @@
 import express from "express";
 import Message from "../models/messages.js";
+import Conversation from "../models/conversations.js";
 import mongoose from "mongoose";
 
 const router = express.Router();
@@ -29,6 +30,15 @@ router.post("/:conversationId", authMiddleware, async(req, res)=> {
         })
 
         const savedMessage = await newMessage.save()
+
+
+        //Update Conversation's Last Message
+        const current_time = Date.now()
+
+        await Conversation.findByIdAndUpdate(conversationId, 
+            {$set: {lastMessage: newMessage, lastMessageAt: current_time }},
+            {new: true, runValidators: true},
+        );
 
         res.status(201).json(savedMessage)
 
