@@ -125,4 +125,6 @@ router.delete("/:messageId", authenticateToken, async(req,res) =>{
 });
 
 
+export default router;
+
 

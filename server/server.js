@@ -7,6 +7,9 @@ import viewRoutes from './routes/view.js';
 import conversationRoutes from './routes/conversation.js';
 import messagingRoutes from './routes/messaging.js';
 
+import dotenv from 'dotenv';
+dotenv.config();
+
 
 const app = express();
 const PORT = process.env.PORT || 5000;

@@ -128,3 +128,6 @@ router.patch("/:listingId", async(req, res) => {
         return res.status(500).json({message: err.message});
     }
 });
+
+
+export default router;
