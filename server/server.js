@@ -4,6 +4,8 @@ import cors from 'cors';
 import { connectDB } from './connection.js';
 import authRoutes from './routes/auth.js';
 import viewRoutes from './routes/view.js';
+import conversationRoutes from './routes/conversation.js';
+import messagingRoutes from './routes/messaging.js';
 
 
 const app = express();
@@ -17,6 +19,8 @@ app.get('/health', (req, res) => {
 });
 app.use('/auth', authRoutes);
 app.use('/listings', viewRoutes);
+app.use('/conversations', conversationRoutes);
+app.use('/messages', messagingRoutes);
 
 
 connectDB().then(() => {

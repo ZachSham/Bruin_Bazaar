@@ -1,7 +1,8 @@
 import express from "express";
+import mongoose from "mongoose";
+import { authenticateToken } from "../middleware/auth.js";
 import Message from "../models/messages.js";
 import Conversation from "../models/conversations.js";
-import mongoose from "mongoose";
 
 const router = express.Router();
 
@@ -9,7 +10,7 @@ const router = express.Router();
 
 ///// Send a message /////
 
-router.post("/:conversationId", authMiddleware, async(req, res)=> {
+router.post("/:conversationId", authenticateToken, async(req, res)=> {
 
     try {
 
@@ -77,7 +78,7 @@ router.get("/:conversationId", async(req, res) => {
 
 ///// Delete Message /////
 
-router.delete("/:messageId", authMiddleware, async(req,res) =>{
+router.delete("/:messageId", authenticateToken, async(req,res) =>{
 
     try {
         const messageId = req.params.messageId;

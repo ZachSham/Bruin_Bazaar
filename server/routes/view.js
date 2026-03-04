@@ -1,13 +1,14 @@
 import express from "express";
-import Listing from "../models/listings.js";
 import mongoose from "mongoose";
+import { authenticateToken } from "../middleware/auth.js";
+import Listing from "../models/listings.js";
 
 const router = express.Router();
 
 
 ///// Create Listing /////
 
-router.post("/", authMiddleware, async(req, res)=> {
+router.post("/", authenticateToken, async(req, res)=> {
     try{
         const {title, description, price} = req.body;
         const seller = req.user._id;
@@ -67,7 +68,7 @@ router.get("/seller/:sellerId", async(req, res) => {
 ///// Delete Listing /////
 
 //id comes from url, so has to be included in url sent by frontend
-router.delete("/:listingId", authMiddleware, async(req,res) =>{
+router.delete("/:listingId", authenticateToken, async(req,res) =>{
 
     try {
         const id = req.params.listingId;
