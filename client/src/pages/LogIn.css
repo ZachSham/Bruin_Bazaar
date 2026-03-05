@@ -1,16 +1,14 @@
-@import url('https://fonts.cdnfonts.com/css/helvetica-now'); 
-
 .login-wrapper {
     display: flex;
     align-items: center;
     justify-content: center;
     height: 100vh;
     background-color: #005587;
-    font-family: 'Helvetica Now', sans-serif;
 }
 
-h2 {
+.login-wrapper h2 {
     text-align: center;
+    font-size: 20px;
 }
 
 .login-page {
@@ -31,7 +29,7 @@ h2 {
 }
 
 .login-form label {
-    font-size: 0.9rem;
+    font-size: 16px;
 }
 
 .login-form input {
@@ -39,7 +37,7 @@ h2 {
     height: 2rem;
     margin-top: 0.3rem;
     padding-left: 0.25rem;
-    font-size: 0.8rem;
+    font-size: 14px;
 }
 
 .login-form div {
@@ -54,7 +52,7 @@ h2 {
     border: 0;
     border-radius: 5px;
     color: white;
-    font-size: 1rem;
+    font-size: 18px;
 }
 
 .login-form button:hover{
@@ -62,7 +60,7 @@ h2 {
 }
 
 .login-form p {
-    font-size: 0.8rem;
+    font-size: 14px;
     margin-top: 0.5rem;
 }
 

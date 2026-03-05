@@ -10,6 +10,10 @@ header {
     justify-content: space-between;
 }
 
+.nav p {
+    font-size: 20px;
+}
+
 .nav ul {
     display: flex;
     list-style-type: none;
@@ -19,6 +23,10 @@ header {
 .logo {
     display: flex;
     align-items: center;
+}
+
+.logo p {
+    font-size: 24px;
 }
 
 .nav a {
@@ -31,5 +39,5 @@ header {
 }
 
 .nav img {
-    width: 2rem;
+    width: 2.5rem;
 }
