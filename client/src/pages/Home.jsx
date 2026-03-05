@@ -1,9 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Header from '../components/Header';
+import ListingGrid from '../components/ListingGrid';
+import SearchBar from '../components/SearchBar';
 
 function Home () {
     return (
-        <Header />
+        <div className='home-page'>
+            <Header />
+            <SearchBar />
+            <ListingGrid />
+        </div>
     );
 };
 

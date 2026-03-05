@@ -1,0 +1,33 @@
+.listing-item {
+    width: 16rem;
+    height: 23rem;
+    background-color: #DAEBFE;
+    border-radius: 16px;
+    border-width: 1px;
+    border-color: lightgray;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.listing-item img {
+    width: 16rem;
+    height: 16rem;
+    object-fit: cover;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.listing-descrip {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+}
+.listing-descrip h1 {
+    font-weight: bold;
+    font-size: 1.25rem;
+}
+
+.listing-item:hover {
+    cursor: pointer;
+}

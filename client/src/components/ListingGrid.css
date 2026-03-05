@@ -1,0 +1,64 @@
+.home-page {
+    background-color: #DAEBFE;
+    min-height: 100vh;
+}
+
+.listing-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 2rem;
+    padding: 2rem 5rem;
+}
+
+.blurred {
+  filter: blur(4px);
+  pointer-events: none; /* prevents clicking through */
+  user-select: none;
+}
+
+.login-prompt {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  width: 20rem;
+  height: 15rem;
+  border-radius: 5px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-prompt p {
+    font-size: 20px;
+}
+
+.login-prompt a {
+    color: green;
+    text-decoration: underline;
+    font-size: 20px;
+}
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+.modal-box {
+  background: white;
+  border-radius: 8px;
+  padding: 2rem;
+  width: 50rem;
+  height: 60rem;
+  max-height: 80vh;
+  overflow-y: auto;
+}
