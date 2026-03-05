@@ -39,7 +39,7 @@ function LogIn() {
         } catch (err) {
             setError(data.error);
         }
-    }
+    } 
 
     return (
         <>
