@@ -1,5 +1,6 @@
  import React, { useState } from "react";
  import ListingCard from './ListingCard';
+ import ListingModal from './ListingModal';
  import './ListingGrid.css';
  import { Link } from 'react-router-dom';
 
@@ -40,18 +41,7 @@
                 </div>
             )}
 
-            {selected && (
-                <div className="modal-backdrop" onClick={() => setSelected(null)}>
-                    <div className="modal-box" onClick={(e) => e.stopPropagation()}>
-                        <button onClick={() => setSelected(null)}>✕</button>
-                        <div className="modal-content">
-                            <img src={selected.image} alt='placeholder' />
-                            <h2>{selected.title}</h2>
-                            <p>${selected.price}</p>
-                        </div>
-                    </div>
-                </div>
-            )}
+            <ListingModal listing={selected} onClose={() => setSelected(null)} />
         </div>
     );
  }
