@@ -1,5 +1,6 @@
  import React, { useState } from "react";
  import ListingCard from './ListingCard';
+ import ListingModal from './ListingModal';
  import './ListingGrid.css';
  import { Link } from 'react-router-dom';
 
@@ -8,14 +9,14 @@
     const [selected, setSelected] = useState(null);
 
     const listings = [
-        { id: 1, title: 'Ferrari 250 Testa Rossa', price: '10,000,000', image: 'https://placehold.co/300x200' },
-        { id: 2, title: 'Custom colleges, DM for more info', price: 10.50, image: 'https://placehold.co/300x200' },
-        { id: 3, title: 'Custom colleges, DM for more info', price: 10.50, image: 'https://placehold.co/300x200' },
-        { id: 4, title: 'Custom colleges, DM for more info', price: 10.50, image: 'https://placehold.co/300x200' },
-        { id: 5, title: 'Custom colleges, DM for more info', price: 10.50, image: 'https://placehold.co/300x200' },
-        { id: 6, title: 'Custom colleges, DM for more info', price: 10.50, image: 'https://placehold.co/300x200' },
-        { id: 7, title: 'Custom colleges, DM for more info', price: 10.50, image: 'https://placehold.co/300x200' },
-        { id: 8, title: 'Custom colleges, DM for more info', price: 10.50, image: 'https://placehold.co/300x200' }
+        { id: 1, title: 'Ferrari 250 Testa Rossa', seller: "Ashley Tran", description: "This is a test description for the listing.", price: '10,000,000', images: ['https://placehold.co/300x200', 'https://placehold.co/300x300'] },
+        { id: 2, title: 'Custom colleges, DM for more info', price: 10.50, images: ['https://placehold.co/300x200'] },
+        { id: 3, title: 'Custom colleges, DM for more info', price: 10.50, images: ['https://placehold.co/300x200'] },
+        { id: 4, title: 'Custom colleges, DM for more info', price: 10.50, images: ['https://placehold.co/300x200'] },
+        { id: 5, title: 'Custom colleges, DM for more info', price: 10.50, images: ['https://placehold.co/300x200'] },
+        { id: 6, title: 'Custom colleges, DM for more info', price: 10.50, images: ['https://placehold.co/300x200'] },
+        { id: 7, title: 'Custom colleges, DM for more info', price: 10.50, images: ['https://placehold.co/300x200'] },
+        { id: 8, title: 'Custom colleges, DM for more info', price: 10.50, images: ['https://placehold.co/300x200'] }
     ]
     // For backend implementaiton
     //const [listings, setListings] = useState([]);
@@ -28,7 +29,7 @@
                         key={listing.id}
                         title={listing.title}
                         price={listing.price}
-                        image={listing.image}
+                        images={listing.images}
                         onClick={() => setSelected(listing)}
                     />
                 ))}
@@ -40,18 +41,7 @@
                 </div>
             )}
 
-            {selected && (
-                <div className="modal-backdrop" onClick={() => setSelected(null)}>
-                    <div className="modal-box" onClick={(e) => e.stopPropagation()}>
-                        <button onClick={() => setSelected(null)}>✕</button>
-                        <div className="modal-content">
-                            <img src={selected.image} alt='placeholder' />
-                            <h2>{selected.title}</h2>
-                            <p>${selected.price}</p>
-                        </div>
-                    </div>
-                </div>
-            )}
+            <ListingModal listing={selected} onClose={() => setSelected(null)} />
         </div>
     );
  }
