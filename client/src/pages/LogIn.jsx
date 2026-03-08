@@ -33,11 +33,12 @@ function LogIn() {
                 throw new Error(data.error || 'Login failed');
             }
 
-            localStorage.setItem('userId', data.userId)
+            localStorage.setItem('token', data.token);
+            localStorage.setItem('userId', data.userId);
             navigate('/');
 
         } catch (err) {
-            setError(data.error);
+            setError(err.message);
         }
     } 
 
@@ -66,7 +67,7 @@ function LogIn() {
                             <br />
                             <label for='password'>Password</label><br />
                             <input 
-                                type='text' 
+                                type='password' 
                                 id='password' 
                                 name='password'
                                 placeholder='Enter your password' 
