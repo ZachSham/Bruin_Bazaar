@@ -93,7 +93,7 @@ router.delete("/:listingId", authenticateToken, async(req,res) =>{
 
         await listing.deleteOne();
 
-        res.json({message: "Listed deleted successfully"});
+        res.json({message: "Listing deleted successfully"});
     }
 
     catch(err){
@@ -105,21 +105,39 @@ router.delete("/:listingId", authenticateToken, async(req,res) =>{
 ///// Edit Listing /////
 
 //Also requires id from url
-router.patch("/:listingId", async(req, res) => {
+router.patch("/:listingId", authenticateToken, async(req, res) => {
     
     try {
         const id = req.params.listingId
+        const userId = req.user._id
 
         // Invalid ID
         if (!mongoose.Types.ObjectId.isValid(id)) {
             return res.status(400).json({ message: "Invalid listing ID" });
         }
 
-        // Searches for listing, updates with request body if found
-        await Listing.findByIdAndUpdate(id, 
-            {$set: req.body},
-            {new: true, runValidators: true},
-        );
+         const listing = await Listing.findById(id);
+
+        if (!listing) {
+            return res.status(404).json({ message: "Listing not found" });
+        }
+
+        // Auth check
+        if (listing.seller.toString() !== userId.toString()) {
+            return res.status(403).json({ message: "Permission denied" });
+        }
+
+        // Only extract the fields users are allowed to change
+        const { title, description, price } = req.body;
+
+        //Only assigns provided fields
+        Object.assign(listing, {
+            ...(title !== undefined && { title }),
+            ...(description !== undefined && { description }),
+            ...(price !== undefined && { price }),
+        });
+        await listing.save();
+
 
         return res.status(200).json({message: "Listing updated"});
     }
@@ -129,5 +147,83 @@ router.patch("/:listingId", async(req, res) => {
     }
 });
 
+
+//// Like /////
+
+router.post("/:listingId/like", authenticateToken, async (req, res) => {
+    try {
+        const listing = await Listing.findById(req.params.listingId);
+        const userId = req.user._id;
+
+        if (!listing) {
+            return res.status(404).json({ message: "Listing not found" });
+        }
+
+        // Check if already liked
+        if (listing.likes.includes(userId)) {
+            return res.status(400).json({ message: "Already liked" });
+        }
+
+        listing.likes.push(userId);
+        await listing.save();
+
+        return res.status(200).json({ likes: listing.likes.length });
+
+    } catch (err) {
+        return res.status(500).json({ message: err.message });
+    }
+});
+
+
+///// unlike /////
+
+router.delete("/:listingId/like", authenticateToken, async (req, res) => {
+    try {
+        const listing = await Listing.findById(req.params.listingId);
+        const userId = req.user._id;
+
+        if (!listing) {
+            return res.status(404).json({ message: "Listing not found" });
+        }
+
+        // Check if already liked
+        if (!listing.likes.includes(userId)) {
+            return res.status(400).json({ message: "Not yet liked" });
+        }
+
+        listing.likes.pull(userId);
+        await listing.save();
+
+        return res.status(200).json({ likes: listing.likes.length });
+
+    } catch (err) {
+        return res.status(500).json({ message: err.message });
+    }
+});
+
+
+///// Get Single Listing /////
+
+router.get("/:listingId", async (req, res) => {
+    try {
+        const id = req.params.listingId;
+
+        // Invalid ID
+        if (!mongoose.Types.ObjectId.isValid(id)) {
+            return res.status(400).json({ message: "Invalid listing ID" });
+        }
+
+        const listing = await Listing.findById(id).populate("seller", "username email");
+
+        if (!listing) {
+            return res.status(404).json({ message: "Listing not found" });
+        }
+
+        return res.status(200).json(listing);
+
+    } catch (err) {
+        return res.status(500).json({ message: err.message });
+    }
+});
 
 export default router;
