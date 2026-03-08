@@ -2,10 +2,10 @@
  import ListingCard from './ListingCard';
  import ListingModal from './ListingModal';
  import './ListingGrid.css';
- import { Link } from 'react-router-dom';
+ import { useAuth } from "../context/AuthContext";
 
  function ListingGrid() {
-    const isLoggedIn = true;
+    const {isLoggedIn} = useAuth();
     const [selected, setSelected] = useState(null);
 
     const listings = [

@@ -10,6 +10,8 @@ header {
     justify-content: space-between;
 }
 
+
+
 .nav p {
     font-size: 20px;
 }
@@ -34,7 +36,7 @@ header {
     color: black;
 }
 
-.nav a:hover {
+.nav ul a:hover, .nav button:hover {
     color: #FFB81C;
 }
 
