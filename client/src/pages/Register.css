@@ -1,12 +1,7 @@
-@import url('https://fonts.cdnfonts.com/css/helvetica-now'); 
-
 .register-wrapper {
     display: flex;
-    align-items: center;
-    justify-content: center;
+    flex-direction: column;
     height: 100vh;
-    background-color: #005587;
-    font-family: 'Helvetica Now', sans-serif;
 }
 
 .register-wrapper h2 {
@@ -15,6 +10,14 @@
 }
 
 .register-page {
+    background-color: #005587;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+}
+
+.register-box {
     display: flex;
     flex-direction: column;
     width: 25rem;

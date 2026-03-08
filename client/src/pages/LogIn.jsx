@@ -3,6 +3,8 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Login.css';
 import Header from '../components/Header';
+import { Link } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 function LogIn() {
 
@@ -12,6 +14,7 @@ function LogIn() {
     });
     const [error, setError] = useState(null);
     const navigate = useNavigate();
+    const { login } = useAuth();  // add this
 
     const handleChange = (e) => {
         setFormData({...formData, [e.target.name]: e.target.value})
@@ -33,7 +36,7 @@ function LogIn() {
                 throw new Error(data.error || 'Login failed');
             }
 
-            localStorage.setItem('token', data.token);
+            login(data.token);
             localStorage.setItem('userId', data.userId);
             navigate('/');
 
@@ -43,12 +46,12 @@ function LogIn() {
     } 
 
     return (
-        <>
-            <Header />
             <section className='login-wrapper'>
+                <Header />
                 <div className='login-page'>
-                    <h2>Login</h2>
-                    {error && <p style={{ color: 'red' }}>{error}</p>}
+                    <div className='login-box'>
+                        <h2>Login</h2>
+                        {error && <p style={{ color: 'red' }}>{error}</p>}
 
                     <form className='login-form' method='post' onSubmit={handleSubmit}>
                         <div>
@@ -78,11 +81,11 @@ function LogIn() {
                                 />
                         </div>
                         <button type='submit'>Login</button>
-                        <p>Don't have an account? <a href='/register'>Register</a></p>
+                        <p>Don't have an account? <Link to='/register'>Register</Link> </p>
                     </form>
+                    </div>
                 </div>
             </section>
-        </>
     );
 };
 export default LogIn;

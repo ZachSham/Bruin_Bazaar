@@ -1,0 +1,14 @@
+.account-page {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.my-account {
+    background-color: #DAEBFE;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+    padding: 4rem;
+}

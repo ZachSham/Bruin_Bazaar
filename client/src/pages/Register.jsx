@@ -39,10 +39,10 @@ function Register() {
     };
 
     return (
-        <>
+        <section className='register-wrapper'>
             <Header />
-            <section className='register-wrapper'>
-                <div className='register-page'>
+            <div className='register-page'>
+                <div className='register-box'>
                     <h2>Register</h2>
                     {error && <p style={{ color: 'red' }}>{error}</p>}
 
@@ -90,8 +90,8 @@ function Register() {
                         <p>Already have an account? <a href='/login'>Login</a></p>
                     </form>
                 </div>
-            </section>    
-        </>
+            </div>
+        </section>    
     );
 };
 export default Register;
