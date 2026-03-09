@@ -5,9 +5,9 @@
 
 .listing-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
     gap: 2rem;
-    padding: 2rem 5rem;
+    padding: 2rem clamp(1rem, 5vw, 5rem);
 }
 
 .blurred {
