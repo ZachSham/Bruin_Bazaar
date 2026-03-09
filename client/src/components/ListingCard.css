@@ -1,7 +1,7 @@
 .listing-item {
     width: 16rem;
     height: 23rem;
-    background-color: #DAEBFE;
+    background-color: transparent;
     border-radius: 16px;
     border-width: 1px;
     border-color: lightgray;
