@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
+import { useAuth } from '../context/AuthContext';
 
-const API_URL = 'http://localhost:5000';
+const API_URL = 'http://localhost:3000';
 
 function CreateListing() {
   const navigate = useNavigate();
+  const { token } = useAuth();
   const [formData, setFormData] = useState({
     title: '',
     description: '',
@@ -61,9 +63,13 @@ function CreateListing() {
         price,
       };
 
+      const headers = {
+        'Content-Type': 'application/json',
+        ...(token && { Authorization: `Bearer ${token}` }),
+      };
       const response = await fetch(`${API_URL}/listings`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers,
         body: JSON.stringify(payload),
       });
 
