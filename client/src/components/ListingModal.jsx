@@ -18,7 +18,7 @@ function ListingModal({ listing, onClose }) {
         <div className="modal-content">
 
             <div className="left-side">
-                <Carousel images={listing.images} />
+                <Carousel images={listing.images || []} />
                 {/*<img src={listing.images[0]} alt={listing.title} />*/}
                 <div className="buttons">
                     <button className="like" onClick={() => setIsActive(!isActive)}>

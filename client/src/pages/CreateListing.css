@@ -1,0 +1,331 @@
+/* UCLA brand colors - used as subtle accents */
+:root {
+  --ucla-blue: #2774AE;
+  --ucla-blue-hover: #1a5a8a;
+  --ucla-gold: #FFD100;
+  --ucla-gold-muted: rgba(255, 209, 0, 0.15);
+}
+
+.create-listing-page {
+  min-height: calc(100vh - 64px);
+  background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
+  padding: 2.5rem 1.5rem 4rem;
+}
+
+.create-listing-container {
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+.create-listing-header {
+  margin-bottom: 2rem;
+}
+
+.create-listing-title {
+  font-size: 1.625rem;
+  font-weight: 600;
+  color: #1e293b;
+  letter-spacing: -0.02em;
+}
+
+.create-listing-subtitle {
+  font-size: 0.875rem;
+  color: #64748b;
+  margin-top: 0.25rem;
+}
+
+.create-listing-form {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+  border: 1px solid #e2e8f0;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Subtle UCLA blue accent bar at top */
+.create-listing-form::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--ucla-blue);
+}
+
+.create-listing-form-inner {
+  padding: 2rem 1.75rem;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group:last-of-type {
+  margin-bottom: 0;
+}
+
+.form-label {
+  display: block;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: #334155;
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.01em;
+}
+
+.form-input,
+.form-textarea,
+.form-select {
+  width: 100%;
+  padding: 0.625rem 0.875rem;
+  font-size: 0.9375rem;
+  color: #1e293b;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-input:focus,
+.form-textarea:focus,
+.form-select:focus {
+  outline: none;
+  border-color: var(--ucla-blue);
+  box-shadow: 0 0 0 3px rgba(39, 116, 174, 0.12);
+}
+
+.form-input::placeholder,
+.form-textarea::placeholder {
+  color: #94a3b8;
+}
+
+.form-textarea {
+  resize: none;
+  min-height: 100px;
+  line-height: 1.5;
+}
+
+/* Custom dropdown - styled to match form inputs */
+.custom-select {
+  width: 100%;
+  padding: 0.625rem 0.875rem;
+  padding-right: 2.5rem;
+  font-size: 0.9375rem;
+  color: #1e293b;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.custom-select:hover {
+  border-color: #cbd5e1;
+}
+
+.custom-select-open {
+  border-color: var(--ucla-blue);
+  box-shadow: 0 0 0 3px rgba(39, 116, 174, 0.12);
+  outline: none;
+}
+
+.custom-select-value {
+  flex: 1;
+}
+
+.custom-select-placeholder {
+  color: #94a3b8;
+}
+
+.custom-select-arrow {
+  display: flex;
+  align-items: center;
+  color: #64748b;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.custom-select-open .custom-select-arrow {
+  transform: rotate(180deg);
+  color: var(--ucla-blue);
+}
+
+.custom-select-options {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  margin-top: 4px;
+  padding: 4px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  list-style: none;
+  z-index: 10;
+  max-height: 220px;
+  overflow-y: auto;
+}
+
+.custom-select-option {
+  padding: 0.5rem 0.75rem;
+  font-size: 0.9375rem;
+  color: #1e293b;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: background 0.15s ease;
+}
+
+.custom-select-option:hover {
+  background: #f1f5f9;
+}
+
+.custom-select-option-selected {
+  background: rgba(39, 116, 174, 0.08);
+  color: var(--ucla-blue);
+  font-weight: 500;
+}
+
+.custom-select-option-selected:hover {
+  background: rgba(39, 116, 174, 0.12);
+}
+
+/* Condition dropdown positioning */
+.form-group-select {
+  position: relative;
+}
+
+/* Image upload area */
+.image-upload-section {
+  margin-bottom: 1.5rem;
+}
+
+.image-previews {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.image-preview-item {
+  position: relative;
+}
+
+.image-preview-item:hover .image-remove-btn {
+  opacity: 1;
+}
+
+.image-preview-item img {
+  width: 72px;
+  height: 72px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+}
+
+.image-remove-btn {
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #ef4444;
+  color: white;
+  border: none;
+  font-size: 1rem;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  transition: background 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+.image-remove-btn:hover {
+  background: #dc2626;
+}
+
+@media (hover: none) {
+  .image-remove-btn {
+    opacity: 1;
+  }
+}
+
+.image-add-label {
+  width: 72px;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed #cbd5e1;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.image-add-label:hover {
+  border-color: var(--ucla-gold);
+  background: var(--ucla-gold-muted);
+}
+
+.image-add-label span {
+  font-size: 1.5rem;
+  color: #94a3b8;
+}
+
+.image-add-label:hover span {
+  color: var(--ucla-blue);
+}
+
+.image-helper {
+  font-size: 0.75rem;
+  color: #64748b;
+  margin-top: 0.25rem;
+}
+
+/* Error message */
+.form-error {
+  padding: 0.75rem 1rem;
+  background: #fef2f2;
+  color: #b91c1c;
+  font-size: 0.875rem;
+  border-radius: 8px;
+  margin-top: 1.25rem;
+}
+
+/* Submit button */
+.submit-btn {
+  width: 100%;
+  padding: 0.875rem 1.5rem;
+  margin-top: 1.75rem;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: white;
+  background: var(--ucla-blue);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.05s ease;
+}
+
+.submit-btn:hover:not(:disabled) {
+  background: var(--ucla-blue-hover);
+}
+
+.submit-btn:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.submit-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

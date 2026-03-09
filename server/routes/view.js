@@ -1,42 +1,55 @@
 import express from "express";
 import mongoose from "mongoose";
+import multer from "multer";
 import { authenticateToken } from "../middleware/auth.js";
 import Listing from "../models/listings.js";
+import cloudinary from "../config/cloudinary.js";
 
 const router = express.Router();
+const upload = multer({ storage: multer.memoryStorage() });
 
 
 ///// Create Listing /////
 
-router.post("/", authenticateToken, async(req, res)=> {
-    try{
-        const {title, description, price} = req.body;
+router.post("/", authenticateToken, upload.array("images", 5), async (req, res) => {
+    try {
+        const { title, description, price, condition } = req.body;
         const seller = req.user._id;
+        const files = req.files || [];
 
-    //Empty title, description, or price fields
-        if (!title || !description || !price) {
+        // Empty title, description, price, or condition fields
+        if (!title || !description || !price || !condition) {
             return res.status(400).json({ message: "All fields required" });
         }
-    // Negative Price
-        if (price < 0){
-            return res.status(400).json({message: "Price cannot be negative."});
+        const parsedPrice = parseFloat(price);
+        if (isNaN(parsedPrice) || parsedPrice < 0) {
+            return res.status(400).json({ message: "Price cannot be negative." });
         }
-    //Create new Listing Object
+
+        // Upload images to Cloudinary
+        const imageUrls = [];
+        for (const file of files) {
+            const b64 = file.buffer.toString("base64");
+            const dataUri = `data:${file.mimetype};base64,${b64}`;
+            const result = await cloudinary.uploader.upload(dataUri, {
+                folder: "bruin-bazaar",
+            });
+            imageUrls.push(result.secure_url);
+        }
+
         const newListing = new Listing({
             title,
             description,
-            price,
+            price: parsedPrice,
+            condition,
             seller,
+            images: imageUrls,
         });
-    //Save Listing object to DB
         const savedListing = await newListing.save();
         res.status(201).json(savedListing);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
     }
-
-    catch(err){
-        res.status(500).json({"message": err.message})
-    }
-
 });
 
 ///// Get all Listings /////
@@ -128,13 +141,14 @@ router.patch("/:listingId", authenticateToken, async(req, res) => {
         }
 
         // Only extract the fields users are allowed to change
-        const { title, description, price } = req.body;
+        const { title, description, price, condition } = req.body;
 
         //Only assigns provided fields
         Object.assign(listing, {
             ...(title !== undefined && { title }),
             ...(description !== undefined && { description }),
             ...(price !== undefined && { price }),
+            ...(condition !== undefined && { condition }),
         });
         await listing.save();
 
