@@ -1,56 +1,125 @@
 .profile-wrapper {
     width: 90vw;
-    padding: 2rem;
+    max-width: 1100px;
+    padding: 2rem 1.75rem;
     display: flex;
     flex-direction: column;
-    gap: 3rem;
-    background-color: white;
-    box-shadow: 5px 5px 10px rgba(8, 8, 8, 0.2);
+    /* slightly tighter so Listings section sits higher */
+    gap: 1.75rem;
+    background: var(--bb-surface);
+    border-radius: 12px;
+    border: 1px solid var(--bb-border);
+    box-shadow: var(--bb-shadow);
+    position: relative;
+    overflow: hidden;
+}
+
+.profile-wrapper::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--ucla-blue);
 }
 
 .profile-listings {
     display: flex;
     flex-direction: column;
+    /* pull the listings section up a bit to better align with the buttons row */
+    margin-top: -1.5rem;
 }
 
 .listing-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200x, 1fr));
-    gap: 2rem;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1.25rem;
 }
 .profile-content {
     display: flex;
     justify-content: space-between;
+    gap: 2rem;
 }
 
 .profile-buttons {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 0.75rem;
 }
-.profile-buttons button:hover {
+
+.profile-buttons button {
+    width: 10rem;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    border: 1px solid var(--bb-border);
+    background: #ffffff;
+    color: #334155;
     cursor: pointer;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease,
+        transform 0.05s ease;
+}
+
+.profile-buttons button:hover {
+    border-color: var(--ucla-blue);
+    box-shadow: 0 0 0 3px rgba(39, 116, 174, 0.12);
+}
+
+.profile-buttons button:active {
+    transform: translateY(1px);
 }
 
 .create-listing {
-    background-color: rgb(234, 150, 13);
+    background: var(--ucla-blue);
+    /* keep border neutral so hover can highlight it like Message */
+    border-color: var(--bb-border);
     color: white;
-    width: 8rem;
-    padding: 0.5rem;
-    border-radius: 5px;
 }
 
+/* Hover behavior comes from `.profile-buttons button:hover` */
+
+/* Override `.message` button style here (ListingModal also uses `.message`) */
+.profile-buttons .message {
+    background: #ffffff;
+    border-color: var(--bb-border);
+    color: #334155;
+}
+
+/* Hover behavior comes from `.profile-buttons button:hover` above */
+
 .profile-content h2 {
-    font-size: 35px;
+    font-size: 1.625rem;
+    font-weight: 600;
+    color: var(--bb-text);
+    letter-spacing: -0.02em;
 }
 
 .profile-wrapper h3 {
-    font-size: 24px;
-    color: grey;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--bb-text-muted);
+    margin-top: 0.25rem;
 }
 
 .profile-listings h3 {
-    color: black;
-    font-size: 30px;
+    color: var(--bb-text);
+    font-size: 1.375rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+/* Subtle polish on cards in this page */
+.profile-wrapper .listing-item {
+    background: #ffffff;
+    border: 1px solid var(--bb-border);
+    box-shadow: var(--bb-shadow);
+    transition: transform 0.1s ease, box-shadow 0.2s ease;
+}
+
+.profile-wrapper .listing-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.10);
 }
 

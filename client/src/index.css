@@ -1,1 +1,48 @@
 @import "tailwindcss";
+
+/* Global theme tokens + base styles */
+:root {
+  /* UCLA brand colors - used as subtle accents across the app */
+  --ucla-blue: #2774AE;
+  --ucla-blue-hover: #1a5a8a;
+  --ucla-gold: #FFD100;
+  --ucla-gold-muted: rgba(255, 209, 0, 0.15);
+
+  /* App surfaces */
+  --bb-page-gradient: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
+  --bb-surface: #ffffff;
+  --bb-border: #e2e8f0;
+  --bb-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+
+  /* Typography */
+  --bb-text: #1e293b;
+  --bb-text-muted: #64748b;
+
+  /* Layout */
+  --bb-header-height: 64px;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  color: var(--bb-text);
+  background: #f8fafc;
+}
+
+/* Shared utilities (optional, but helps consistent feel) */
+.bb-page {
+  min-height: calc(100vh - var(--bb-header-height));
+  background: var(--bb-page-gradient);
+  padding: 2.5rem 1.5rem 4rem;
+}
+
+.bb-card {
+  background: var(--bb-surface);
+  border-radius: 12px;
+  border: 1px solid var(--bb-border);
+  box-shadow: var(--bb-shadow);
+}
