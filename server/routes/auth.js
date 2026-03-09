@@ -172,8 +172,6 @@ router.get("/profile", authenticateToken, async(req, res) => {
 });
 
 router.get("/profile/:userId", async(req, res) => {
-    console.log("hit /profile/:userId", req.params.userId);
-
     try {
         const user = await User.findById(req.params.userId).select("username email");
         if (!user) {
