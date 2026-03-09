@@ -46,7 +46,6 @@ function MyAccount() {
                 <Profile
                     username={userData.username}
                     email={userData.email}
-                    rating={4.5}
                 />
             </div>
         </div>
