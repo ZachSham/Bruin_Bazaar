@@ -1,15 +1,12 @@
 import React from "react";
 import './Profile.css';
+import { useState } from "react";
 import ListingCard from "./ListingCard";
+import ListingModal from "./ListingModal";
 import { Link } from "react-router-dom";
 
-function Profile({children})
+function Profile({username, email, rating})
 {
-    const user = {
-        username: 'joebrewin',
-        name: 'Joe Bruin',
-        rating: 4.5
-    }
 
     const listings = [
         { id: 1, title: 'Ferrari 250 Testa Rossa', seller: "Ashley Tran", description: "This is a test description for the listing.", price: '10,000,000', images: ['https://placehold.co/300x200', 'https://placehold.co/300x300'] },
@@ -18,14 +15,15 @@ function Profile({children})
         { id: 4, title: 'Custom colleges, DM for more info', price: 10.50, images: ['https://placehold.co/300x200'] },
     ]
 
+    const [selected, setSelected] = useState(null);
+    
     return (
         <div className="profile-wrapper">
             <div className="profile-content">
                 <div>
-                    <h2>{user.name}</h2>
-                    <h3>@{user.username}</h3>
-                    <h3>Rating: {user.rating}/5</h3>
-                    {children}
+                    <h2>@{username}</h2>
+                    <h3>{email}</h3>
+                    <h3>Rating: {rating}/5</h3>
                 </div>
                 <div className="profile-buttons">
                     <button className="message">Message</button>
@@ -35,7 +33,7 @@ function Profile({children})
             </div>
 
             <div className="profile-listings">
-                <h3>{user.name}'s Listings</h3>
+                <h3>{username}'s Listings</h3>
                 <div className="listing-grid">
                     {listings.map(listing => (
                     <ListingCard 
@@ -46,6 +44,8 @@ function Profile({children})
                         onClick={() => setSelected(listing)}
                     />
                 ))}
+
+                <ListingModal listing={selected} onClose={() => setSelected(null)} />
                 </div>
             </div>
         </div>

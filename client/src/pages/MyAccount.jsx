@@ -8,7 +8,11 @@ function MyAccount() {
         <div className="account-page">
             <Header />
             <div className="my-account">
-                <Profile />
+                <Profile
+                    username="joebrewin"
+                    email="joebruin@ucla.edu"
+                    rating={4.5}
+                />
             </div>
         </div>
     );
