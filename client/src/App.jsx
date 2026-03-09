@@ -8,6 +8,7 @@ import CreateListing from './pages/CreateListing.jsx';
 import MyAccount from './pages/MyAccount.jsx';
 import { AuthProvider } from './context/AuthContext.jsx';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
+import PublicProfile from './components/PublicProfile.jsx';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path="/connection" element={<Connection />} />
           <Route path="/create" element={<CreateListing />} />
           <Route path="/myaccount" element={<ProtectedRoute><MyAccount /></ProtectedRoute>} />
+          <Route path="/profile/:userId" element={<PublicProfile />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>

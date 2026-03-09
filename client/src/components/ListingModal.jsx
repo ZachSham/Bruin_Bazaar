@@ -3,6 +3,8 @@ import "./ListingModal.css";
 import { useState } from "react";
 import Carousel from './Carousel.jsx';
 import { useAuth } from "../context/AuthContext";
+import { Link } from "react-router-dom";
+import Profile from "./Profile.jsx";
 
 const API_URL = "http://localhost:3000";
 const CONDITION_OPTIONS = ['Brand new', 'Like new', 'Used - excellent', 'Used - good', 'Used - fair'];
@@ -22,6 +24,11 @@ function ListingModal({ listing, onClose, onDeleted, onUpdated }) {
     const [isSaving, setIsSaving] = useState(false);
     const [editError, setEditError] = useState("");
     const { token } = useAuth();
+<<<<<<< HEAD
+=======
+    if (!listing) return null;
+    console.log(listing);
+>>>>>>> main
 
     const listingId = listing?._id || listing?.id;
     const currentUserId = localStorage.getItem("userId");
@@ -202,6 +209,7 @@ function ListingModal({ listing, onClose, onDeleted, onUpdated }) {
             </div>
 
             <div className="right-side">
+<<<<<<< HEAD
                 {isEditing ? (
                   <div className="edit-form">
                     <h1 className="title">Edit Listing</h1>
@@ -307,6 +315,15 @@ function ListingModal({ listing, onClose, onDeleted, onUpdated }) {
                     <p className="description">{listing.description}</p>
                   </>
                 )}
+=======
+                <h1 className="title">{listing.title}</h1>
+                <h2 className="price">${listing.price}</h2>
+               <p className="seller">
+                  Listed by <Link to={`/profile/${sellerId}`} className="sell-profile">{sellerDisplay}</Link>
+                </p>
+                <h2 className="sell-title">Seller's description</h2>
+                <p className="description">{listing.description}</p>
+>>>>>>> main
             </div>
     
         </div>

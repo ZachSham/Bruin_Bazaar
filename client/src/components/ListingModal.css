@@ -166,6 +166,7 @@
   font-weight: 600;
 }
 
+<<<<<<< HEAD
 .edit:hover {
   background-color: #16a34a;
 }
@@ -234,4 +235,8 @@
 .edit-error {
   color: #b91c1c;
   font-size: 0.85rem;
+}
+
+.sell-profile {
+    text-decoration: underline;
 }
