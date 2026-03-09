@@ -39,7 +39,7 @@
             <div className={`listing-grid ${!isLoggedIn ? 'blurred' : ''}`}>
                 {listings.map(listing => (
                     <ListingCard 
-                        key={listing.id}
+                        key={listing._id}
                         title={listing.title}
                         price={listing.price}
                         images={listing.images}

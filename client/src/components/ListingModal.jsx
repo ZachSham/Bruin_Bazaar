@@ -5,6 +5,8 @@ import Carousel from './Carousel.jsx';
 import defaultLike from "../assets/thumb-up.png";
 import activeLike from "../assets/thumb-up-clicked.png";
 import { useAuth } from "../context/AuthContext";
+import { Link } from "react-router-dom";
+import Profile from "./Profile.jsx";
 
 const API_URL = "http://localhost:3000";
 
@@ -16,6 +18,7 @@ function ListingModal({ listing, onClose, onDeleted }) {
     const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
     const { token } = useAuth();
     if (!listing) return null;
+    console.log(listing);
 
     const listingId = listing?._id || listing?.id;
     const currentUserId = localStorage.getItem("userId");
@@ -122,7 +125,9 @@ function ListingModal({ listing, onClose, onDeleted }) {
             <div className="right-side">
                 <h1 className="title">{listing.title}</h1>
                 <h2 className="price">${listing.price}</h2>
-                <p className="seller">Listed by {sellerDisplay}</p>
+               <p className="seller">
+                  Listed by <Link to={`/profile/${sellerId}`} className="sell-profile">{sellerDisplay}</Link>
+                </p>
                 <h2 className="sell-title">Seller's description</h2>
                 <p className="description">{listing.description}</p>
             </div>

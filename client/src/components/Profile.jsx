@@ -7,7 +7,7 @@ import { useAuth } from "../context/AuthContext";
 
 const API_URL = "http://localhost:3000";
 
-function Profile({ children }) {
+function Profile({ children, userId }) {
   const { token } = useAuth();
 
   const [user, setUser] = useState(null); // { username, email }
@@ -16,25 +16,31 @@ function Profile({ children }) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const isOwnProfile = !userId;
+
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         setError(null);
         setLoading(true);
 
-        const headers = {};
-        if (token) headers["Authorization"] = `Bearer ${token}`;
+        let profileRes;
 
-        const userId = localStorage.getItem("userId");
+        if (isOwnProfile) {
+          // Fetch logged-in user's profile (requires token)
+          const storedUserId = localStorage.getItem("userId");
+          profileRes = await fetch(`${API_URL}/auth/profile`, {
+            headers: { Authorization: `Bearer ${token}` },
+          });
+          var targetUserId = storedUserId;
+        } else {
+          // Fetch public profile by userId
+          profileRes = await fetch(`${API_URL}/auth/profile/${userId}`);
+          var targetUserId = userId;
+        }
 
-        const [profileRes, listingsRes] = await Promise.all([
-          fetch(`${API_URL}/auth/profile`, { headers }),
-          userId
-            ? fetch(`${API_URL}/listings/seller/${userId}`)
-            : Promise.resolve({ ok: false }),
-        ]);
-
-        if (!profileRes.ok) {
+         if (!profileRes.ok) {
           const body = await profileRes.json().catch(() => ({}));
           throw new Error(body.message || "Failed to load profile");
         }
@@ -42,8 +48,11 @@ function Profile({ children }) {
         const profileData = await profileRes.json();
 
         let listingData = [];
-        if (userId && listingsRes.ok) {
-          listingData = await listingsRes.json();
+        if (targetUserId) {
+          const listingsRes = await fetch(`${API_URL}/listings/seller/${targetUserId}`);
+          if (listingsRes.ok) {
+            listingData = await listingsRes.json();
+          }
         }
 
         setUser(profileData);
@@ -78,9 +87,11 @@ function Profile({ children }) {
         </div>
         <div className="profile-buttons">
           <button className="message">Message</button>
-          <Link to="/create">
-            <button className="create-listing">Create Listing</button>
-          </Link>
+          {isOwnProfile && (
+            <Link to="/create">
+                <button className="create-listing">Create Listing</button>
+            </Link>
+            )}
         </div>
       </div>
 

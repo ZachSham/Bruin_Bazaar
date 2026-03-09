@@ -56,7 +56,9 @@ router.post("/", authenticateToken, upload.array("images", 5), async (req, res) 
 
 router.get("/", async(req, res) => {
     try{
-        const listings = await Listing.find().sort({createdAt: -1});
+        const listings = await Listing.find()
+            .populate("seller", "username email")
+            .sort({createdAt: -1});
         res.json(listings)
     }
     catch(err){
@@ -69,7 +71,9 @@ router.get("/", async(req, res) => {
 router.get("/seller/:sellerId", async(req, res) => {
     try{
         const seller = req.params.sellerId;
-        const listings = await Listing.find({seller: seller}).sort({createdAt: -1});
+        const listings = await Listing.find({seller: seller})
+            .populate("seller", "username email")
+            .sort({createdAt: -1});
         res.json(listings)
     }
     catch(err){
