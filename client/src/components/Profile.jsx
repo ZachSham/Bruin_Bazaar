@@ -111,6 +111,14 @@ function Profile({ children }) {
       <ListingModal
         listing={selected}
         onClose={() => setSelected(null)}
+        onUpdated={(updated) => {
+          setListings((prev) =>
+            prev.map((l) =>
+              (l._id || l.id) === (updated._id || updated.id) ? updated : l
+            )
+          );
+          setSelected(updated);
+        }}
         onDeleted={(deletedId) => {
           setListings((prev) =>
             prev.filter((l) => (l._id || l.id) !== deletedId)
