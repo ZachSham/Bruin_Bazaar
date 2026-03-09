@@ -1,11 +1,3 @@
-/* UCLA brand colors - used as subtle accents */
-:root {
-  --ucla-blue: #2774AE;
-  --ucla-blue-hover: #1a5a8a;
-  --ucla-gold: #FFD100;
-  --ucla-gold-muted: rgba(255, 209, 0, 0.15);
-}
-
 .create-listing-page {
   min-height: calc(100vh - 64px);
   background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
