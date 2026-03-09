@@ -24,11 +24,6 @@ function ListingModal({ listing, onClose, onDeleted, onUpdated }) {
     const [isSaving, setIsSaving] = useState(false);
     const [editError, setEditError] = useState("");
     const { token } = useAuth();
-<<<<<<< HEAD
-=======
-    if (!listing) return null;
-    console.log(listing);
->>>>>>> main
 
     const listingId = listing?._id || listing?.id;
     const currentUserId = localStorage.getItem("userId");
@@ -209,7 +204,6 @@ function ListingModal({ listing, onClose, onDeleted, onUpdated }) {
             </div>
 
             <div className="right-side">
-<<<<<<< HEAD
                 {isEditing ? (
                   <div className="edit-form">
                     <h1 className="title">Edit Listing</h1>
@@ -310,20 +304,13 @@ function ListingModal({ listing, onClose, onDeleted, onUpdated }) {
                     {listing.condition && (
                       <p className="condition">Condition: {listing.condition}</p>
                     )}
-                    <p className="seller">Listed by {sellerDisplay}</p>
+                    <p className="seller">
+                      Listed by <Link to={`/profile/${sellerId}`} className="sell-profile">{sellerDisplay}</Link>
+                    </p>
                     <h2 className="sell-title">Seller's description</h2>
                     <p className="description">{listing.description}</p>
                   </>
                 )}
-=======
-                <h1 className="title">{listing.title}</h1>
-                <h2 className="price">${listing.price}</h2>
-               <p className="seller">
-                  Listed by <Link to={`/profile/${sellerId}`} className="sell-profile">{sellerDisplay}</Link>
-                </p>
-                <h2 className="sell-title">Seller's description</h2>
-                <p className="description">{listing.description}</p>
->>>>>>> main
             </div>
     
         </div>
