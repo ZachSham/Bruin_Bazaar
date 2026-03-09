@@ -8,7 +8,7 @@ import CreateListing from './pages/CreateListing.jsx';
 import MyAccount from './pages/MyAccount.jsx';
 import { AuthProvider } from './context/AuthContext.jsx';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
-import PublicProfile from './components/PublicProfile.jsx';
+import PublicProfile from './pages/PublicProfile.jsx';
 
 function App() {
   return (

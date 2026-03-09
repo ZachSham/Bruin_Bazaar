@@ -1,6 +1,6 @@
 .create-listing-page {
   min-height: calc(100vh - 64px);
-  background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
+  background-color: #DAEBFE;
   padding: 2.5rem 1.5rem 4rem;
 }
 

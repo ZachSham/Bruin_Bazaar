@@ -157,7 +157,7 @@
 }
 
 .edit {
-  background-color: #22c55e;
+  background-color: #22c56b;
   color: #ffffff;
   width: 8rem;
   padding: 0.5rem;
@@ -166,7 +166,6 @@
   font-weight: 600;
 }
 
-<<<<<<< HEAD
 .edit:hover {
   background-color: #16a34a;
 }
