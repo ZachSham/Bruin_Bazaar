@@ -4,6 +4,7 @@
  import './ListingGrid.css';
  import { Link } from "react-router-dom";
  import { useAuth } from "../context/AuthContext";
+import { API_URL } from "../config";
 
  function ListingGrid({sellerId, searchResults}) {
      const { isLoggedIn } = useAuth();
@@ -16,8 +17,8 @@
         const fetchListings = async () => {
             try {
                 const url = sellerId
-                    ? `http://localhost:3000/listings/seller/${sellerId}`
-                    : `http://localhost:3000/listings`;
+                    ? `${API_URL}/listings/seller/${sellerId}`
+                    : `${API_URL}/listings`;
 
                 const res = await fetch(url);
                 if (!res.ok) throw new Error("Failed to fetch listings");

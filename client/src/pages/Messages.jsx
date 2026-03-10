@@ -3,9 +3,8 @@ import { io } from "socket.io-client";
 import { useLocation, useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import { useAuth } from "../context/AuthContext";
+import { API_URL } from "../config";
 import "./Messages.css";
-
-const API_URL = "http://localhost:3000";
 
 function useQuery() {
   const { search } = useLocation();

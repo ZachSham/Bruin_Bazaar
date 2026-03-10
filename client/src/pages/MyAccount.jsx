@@ -3,6 +3,7 @@ import Header from "../components/Header";
 import Profile from '../components/Profile';
 import { useAuth } from "../context/AuthContext";
 import { useState, useEffect } from "react";
+import { API_URL } from "../config";
 import './MyAccount.css';
 
 function MyAccount() {
@@ -15,7 +16,7 @@ function MyAccount() {
     useEffect(() => {
         const fetchProfile = async () => {
             try {
-                const res = await fetch("http://localhost:3000/auth/profile", {
+                const res = await fetch(`${API_URL}/auth/profile`, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },

@@ -2,9 +2,8 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import { useAuth } from '../context/AuthContext';
+import { API_URL } from '../config';
 import './CreateListing.css';
-
-const API_URL = 'http://localhost:3000';
 
 function CreateListing() {
   const navigate = useNavigate();

@@ -4,8 +4,7 @@ import ListingCard from "./ListingCard";
 import ListingModal from "./ListingModal";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-
-const API_URL = "http://localhost:3000";
+import { API_URL } from "../config";
 
 function Profile({ children, userId }) {
   const { token } = useAuth();

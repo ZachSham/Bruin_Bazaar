@@ -5,8 +5,8 @@ import Carousel from './Carousel.jsx';
 import { useAuth } from "../context/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
 import Profile from "./Profile.jsx";
+import { API_URL } from "../config";
 
-const API_URL = "http://localhost:3000";
 const CONDITION_OPTIONS = ['Brand new', 'Like new', 'Used - excellent', 'Used - good', 'Used - fair'];
 
 function ListingModal({ listing, onClose, onDeleted, onUpdated }) {
