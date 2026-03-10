@@ -57,13 +57,8 @@ router.post("/", authenticateToken, upload.array("images", 5), async (req, res) 
 router.get("/", async(req, res) => {
     try{
         const listings = await Listing.find()
-<<<<<<< HEAD
-            .sort({createdAt: -1})
-            .populate("seller", "username email");
-=======
             .populate("seller", "username email")
             .sort({createdAt: -1});
->>>>>>> main
         res.json(listings)
     }
     catch(err){
@@ -77,13 +72,8 @@ router.get("/seller/:sellerId", async(req, res) => {
     try{
         const seller = req.params.sellerId;
         const listings = await Listing.find({seller: seller})
-<<<<<<< HEAD
-            .sort({createdAt: -1})
-            .populate("seller", "username email");
-=======
             .populate("seller", "username email")
             .sort({createdAt: -1});
->>>>>>> main
         res.json(listings)
     }
     catch(err){
@@ -127,6 +117,38 @@ router.delete("/:listingId", authenticateToken, async(req,res) =>{
         res.status(500).json({message: err.message});
     }
 });
+
+
+///// Listing Sold /////
+
+router.patch("/:listingId/listing_sold", authenticateToken, async(req, res) => {
+
+    try {
+        const listing = await Listing.findById(req.params.listingId);
+        const userId = req.user._id;
+
+        if (!listing) {
+            return res.status(404).json({ message: "Listing not found" });
+        }
+
+        if (listing.seller.toString() !== userId.toString()) {
+            return res.status(403).json({ message: "Permission denied" });
+        }
+
+        listing.sold = true;
+        await listing.save();
+
+        return res.status(200).json({message: "Listing marked as sold"})
+        
+    }
+
+    catch(err) {
+        return res.status(500).json({error: err.message})
+    }
+
+
+});
+
 
 
 ///// Edit Listing /////
@@ -176,7 +198,8 @@ router.patch("/:listingId", authenticateToken, async(req, res) => {
 });
 
 
-//// Like /////
+
+///// Like /////
 
 router.post("/:listingId/like", authenticateToken, async (req, res) => {
     try {
@@ -230,6 +253,38 @@ router.delete("/:listingId/like", authenticateToken, async (req, res) => {
 });
 
 
+
+///// Search for Lisitng /////
+router.get("/search", async(req, res) => {
+    try {
+        const { q } = req.query;
+
+        if (!q) {
+            return res.status(400).json({ message: "Search query required" });
+        }
+
+        const regex = new RegExp(q, "i"); //i means case-insensitive
+
+        const listings = await Listing.find({
+            sold: false,
+            $or: [
+                { title: regex },
+                { description: regex },
+            ]
+        })
+        .populate("seller", "username email")
+        .sort({ createdAt: -1 });
+
+        return res.status(200).json(listings);
+    }
+    catch(err) {
+        return res.status(500).json({ message: err.message });
+    }
+});
+
+
+
+
 ///// Get Single Listing /////
 
 router.get("/:listingId", async (req, res) => {
@@ -255,3 +310,4 @@ router.get("/:listingId", async (req, res) => {
 });
 
 export default router;
+

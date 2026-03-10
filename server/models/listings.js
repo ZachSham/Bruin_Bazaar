@@ -11,6 +11,7 @@ const listingSchema = new mongoose.Schema({
     seller: {type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true},
     images: [{ type: String }],
     likes: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+    sold: {type: Boolean, default: false},
     },
     
     {timestamps: true }
