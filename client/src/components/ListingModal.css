@@ -79,6 +79,8 @@
 .buttons {
     display: flex;
     justify-content: space-evenly;
+    gap: 0.75rem;
+    flex-wrap: wrap;
 }
 
 .message {
@@ -89,19 +91,151 @@
     border-radius: 5px;
 }
 
-.like img {
-    width: 2rem;
-    height: 2rem;
-    filter: invert(1);
+.delete {
+    background: #ef4444;
+    color: white;
+    width: 8rem;
+    padding: 0.5rem;
+    border-radius: 5px;
+    border: none;
 }
 
-.like {
-    width: 8rem;
+.delete:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.delete-confirm {
+    margin-top: 0.75rem;
+    padding: 0.75rem 0.875rem;
+    border-radius: 8px;
+    border: 1px solid #fecaca;
+    background: #fef2f2;
+}
+
+.delete-confirm-text {
+    color: #7f1d1d;
+    font-size: 0.95rem;
+    margin-bottom: 0.6rem;
+}
+
+.delete-confirm-actions {
     display: flex;
-    align-items: center;
-    gap: 1rem;
-    background-color: #f2a0c6;
-    color: white;
-    border-radius: 5px;
-    padding: 0.25rem;
+    gap: 0.5rem;
+}
+
+.delete-cancel,
+.delete-confirm-btn {
+    flex: 1;
+    padding: 0.5rem 0.75rem;
+    border-radius: 6px;
+    border: none;
+    font-weight: 600;
+}
+
+.delete-cancel {
+    background: #ffffff;
+    border: 1px solid #fecaca;
+    color: #7f1d1d;
+}
+
+.delete-confirm-btn {
+    background: #ef4444;
+    color: #ffffff;
+}
+
+.delete-cancel:disabled,
+.delete-confirm-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.delete-error {
+    margin-top: 0.75rem;
+    color: #b91c1c;
+    font-size: 0.875rem;
+}
+
+.edit {
+  background-color: #22c56b;
+  color: #ffffff;
+  width: 8rem;
+  padding: 0.5rem;
+  border-radius: 5px;
+  border: none;
+  font-weight: 600;
+}
+
+.edit:hover {
+  background-color: #16a34a;
+}
+
+.condition {
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+  color: #4b5563;
+}
+
+.edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.edit-label {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.9rem;
+  gap: 0.25rem;
+}
+
+.edit-input {
+  padding: 0.4rem 0.5rem;
+  border-radius: 4px;
+  border: 1px solid #d1d5db;
+  font-size: 0.95rem;
+}
+
+.edit-textarea {
+  resize: vertical;
+  min-height: 4rem;
+}
+
+.edit-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.edit-cancel,
+.edit-save {
+  flex: 1;
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  border: none;
+  font-weight: 600;
+}
+
+.edit-cancel {
+  background-color: #e5e7eb;
+  color: #111827;
+}
+
+.edit-save {
+  background-color: #22c55e;
+  color: white;
+}
+
+.edit-save:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.edit-error {
+  color: #b91c1c;
+  font-size: 0.85rem;
+}
+
+.sell-profile {
+    text-decoration: underline;
 }

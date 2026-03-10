@@ -1,10 +1,11 @@
 .profile-wrapper {
-    width: 90vw;
-    border-width: 2px;
+    width: 70vw;
     padding: 2rem;
     display: flex;
     flex-direction: column;
     gap: 3rem;
+    background-color: white;
+    box-shadow: 5px 5px 10px rgba(8, 8, 8, 0.2);
 }
 
 .profile-listings {
@@ -12,10 +13,11 @@
     flex-direction: column;
 }
 
-.listing-grid {
+.profile-listings .listing-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(200x, 1fr));
     gap: 2rem;
+    padding: 2rem;
 }
 .profile-content {
     display: flex;
@@ -27,9 +29,14 @@
     flex-direction: column;
     gap: 1rem;
 }
+
 .profile-buttons button:hover {
     cursor: pointer;
+    filter: brightness(0.9);
+    transform: translateY(1px);
+    box-shadow: 0 0 0 3px rgba(39, 116, 174, 0.12);
 }
+
 
 .create-listing {
     background-color: rgb(234, 150, 13);
@@ -44,6 +51,16 @@
 }
 
 .profile-wrapper h3 {
-    font-size: 24px;
+    font-size: 20px;
+    color: grey;
 }
 
+.profile-listings h3 {
+    color: black;
+    font-size: 28px;
+}
+
+.profile-wrapper .listing-item {
+    height: 22rem;
+    width: 18rem;
+}

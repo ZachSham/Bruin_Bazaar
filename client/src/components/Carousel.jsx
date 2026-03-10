@@ -4,15 +4,17 @@ import { Navigation } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 
-function Carousel({ images }) {
+function Carousel({ images = [] }) {
+  const displayImages = images?.length > 0 ? images : ['https://placehold.co/400x400?text=No+Image'];
+  const shouldLoop = displayImages.length > 1;
   return (
     <Swiper
       modules={[Navigation]}
       navigation={true}
-      loop={true}
+      loop={shouldLoop}
       style={{ width: '28rem', height: '28rem' }}
     >
-      {images.map((img, i) => (
+      {displayImages.map((img, i) => (
         <SwiperSlide key={i}>
           <img
             src={img}

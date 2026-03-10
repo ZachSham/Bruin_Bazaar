@@ -1,32 +1,45 @@
- import React, { useState } from "react";
+ import React, { useState, useEffect } from "react";
  import ListingCard from './ListingCard';
  import ListingModal from './ListingModal';
  import './ListingGrid.css';
  import { useAuth } from "../context/AuthContext";
 
- function ListingGrid() {
-    const {isLoggedIn} = useAuth();
+ function ListingGrid({sellerId}) {
+     const { isLoggedIn } = useAuth();
     const [selected, setSelected] = useState(null);
+    const [listings, setListings] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
-    const listings = [
-        { id: 1, title: 'Ferrari 250 Testa Rossa', seller: "Ashley Tran", description: "This is a test description for the listing.", price: '10,000,000', images: ['https://placehold.co/300x200', 'https://placehold.co/300x300'] },
-        { id: 2, title: 'Custom colleges, DM for more info', price: 10.50, images: ['https://placehold.co/300x200'] },
-        { id: 3, title: 'Custom colleges, DM for more info', price: 10.50, images: ['https://placehold.co/300x200'] },
-        { id: 4, title: 'Custom colleges, DM for more info', price: 10.50, images: ['https://placehold.co/300x200'] },
-        { id: 5, title: 'Custom colleges, DM for more info', price: 10.50, images: ['https://placehold.co/300x200'] },
-        { id: 6, title: 'Custom colleges, DM for more info', price: 10.50, images: ['https://placehold.co/300x200'] },
-        { id: 7, title: 'Custom colleges, DM for more info', price: 10.50, images: ['https://placehold.co/300x200'] },
-        { id: 8, title: 'Custom colleges, DM for more info', price: 10.50, images: ['https://placehold.co/300x200'] }
-    ]
-    // For backend implementaiton
-    //const [listings, setListings] = useState([]);
-    //const [loading, setLoading] = useState(true);
+    useEffect(() => {
+        const fetchListings = async () => {
+            try {
+                const url = sellerId
+                    ? `http://localhost:3000/listings/seller/${sellerId}`
+                    : `http://localhost:3000/listings`;
+
+                const res = await fetch(url);
+                if (!res.ok) throw new Error("Failed to fetch listings");
+                const data = await res.json();
+                setListings(data);
+            } catch (err) {
+                setError(err.message);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchListings();
+    }, [sellerId]);
+
+    if (loading) return <p className="status-msg">Loading listings...</p>;
+    if (error)   return <p className="status-msg">Error: {error}</p>;
     return (
         <div>
             <div className={`listing-grid ${!isLoggedIn ? 'blurred' : ''}`}>
                 {listings.map(listing => (
                     <ListingCard 
-                        key={listing.id}
+                        key={listing._id}
                         title={listing.title}
                         price={listing.price}
                         images={listing.images}

@@ -1,9 +1,9 @@
 .search {
-    padding: 3rem 0 0 5rem;
+    padding: 3rem 0 0 7rem;
 }
 
 .search-input {
-    width: 45rem;
+    width: 45vw;
     border: 2px solid;
     border-color: #8BB8E8;
     border-radius: 5px;
