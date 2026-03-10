@@ -28,6 +28,7 @@ router.post("/", authenticateToken, upload.array("images", 5), async (req, res) 
 
         // Upload images to Cloudinary
         const imageUrls = [];
+        const imagePublicIds = [];
         for (const file of files) {
             const b64 = file.buffer.toString("base64");
             const dataUri = `data:${file.mimetype};base64,${b64}`;
@@ -35,6 +36,7 @@ router.post("/", authenticateToken, upload.array("images", 5), async (req, res) 
                 folder: "bruin-bazaar",
             });
             imageUrls.push(result.secure_url);
+            imagePublicIds.push(result.public_id);
         }
 
         const newListing = new Listing({
@@ -44,6 +46,7 @@ router.post("/", authenticateToken, upload.array("images", 5), async (req, res) 
             condition,
             seller,
             images: imageUrls,
+            imagePublicIds,
         });
         const savedListing = await newListing.save();
         res.status(201).json(savedListing);
@@ -106,6 +109,17 @@ router.delete("/:listingId", authenticateToken, async(req,res) =>{
 
         if (listing.seller.toString() != userId.toString()){
             return (res.status(403).json({message: "Permission Denied"}));
+        }
+
+        // Delete images from Cloudinary before removing the listing
+        if (listing.imagePublicIds && listing.imagePublicIds.length > 0) {
+            for (const publicId of listing.imagePublicIds) {
+                try {
+                    await cloudinary.uploader.destroy(publicId);
+                } catch (err) {
+                    console.error("Cloudinary destroy failed for", publicId, err.message);
+                }
+            }
         }
 
         await listing.deleteOne();

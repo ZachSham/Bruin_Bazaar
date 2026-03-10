@@ -10,6 +10,7 @@ const listingSchema = new mongoose.Schema({
     condition: {type: String, enum: CONDITION_OPTIONS, required: true},
     seller: {type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true},
     images: [{ type: String }],
+    imagePublicIds: [{ type: String }],
     likes: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
     sold: {type: Boolean, default: false},
     },
