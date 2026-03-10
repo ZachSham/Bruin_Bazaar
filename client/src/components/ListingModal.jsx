@@ -31,6 +31,7 @@ function ListingModal({ listing, onClose, onDeleted, onUpdated }) {
       typeof listing?.seller === "object" && listing?.seller !== null
         ? listing.seller?._id
         : listing?.seller;
+    const profileLink = sellerId === currentUserId ? "/myaccount" : `/profile/${sellerId}`;
 
     const isOwner = Boolean(listingId && currentUserId && sellerId && sellerId === currentUserId);
     const sellerDisplay =
@@ -305,7 +306,7 @@ function ListingModal({ listing, onClose, onDeleted, onUpdated }) {
                       <p className="condition">Condition: {listing.condition}</p>
                     )}
                     <p className="seller">
-                      Listed by <Link to={`/profile/${sellerId}`} className="sell-profile">{sellerDisplay}</Link>
+                      Listed by <Link to={profileLink} className="sell-profile">{sellerDisplay}</Link>
                     </p>
                     <h2 className="sell-title">Seller's description</h2>
                     <p className="description">{listing.description}</p>
