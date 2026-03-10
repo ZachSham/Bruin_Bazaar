@@ -4,11 +4,14 @@ import ListingGrid from '../components/ListingGrid';
 import SearchBar from '../components/SearchBar';
 
 function Home () {
+
+    const [searchResults, setSearchResults] = useState(null);
+    
     return (
         <div className='home-page'>
             <Header />
-            <SearchBar />
-            <ListingGrid />
+            <SearchBar onResults={setSearchResults} onClear={() => setSearchResults(null)}/>
+            <ListingGrid searchResults={searchResults}/>
         </div>
     );
 };

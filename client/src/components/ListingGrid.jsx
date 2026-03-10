@@ -2,9 +2,10 @@
  import ListingCard from './ListingCard';
  import ListingModal from './ListingModal';
  import './ListingGrid.css';
+ import { Link } from "react-router-dom";
  import { useAuth } from "../context/AuthContext";
 
- function ListingGrid({sellerId}) {
+ function ListingGrid({sellerId, searchResults}) {
      const { isLoggedIn } = useAuth();
     const [selected, setSelected] = useState(null);
     const [listings, setListings] = useState([]);
@@ -32,13 +33,20 @@
         fetchListings();
     }, [sellerId]);
 
-    if (loading) return <p className="status-msg">Loading listings...</p>;
-    if (error)   return <p className="status-msg">Error: {error}</p>;
+    const displayListings = searchResults ?? listings;
+
+    if (loading && !searchResults) return <p className="status-msg">Loading listings...</p>;
+    if (error) return <p className="status-msg">Error: {error}</p>;
+
     return (
         <div>
+            {searchResults && (
+                <p className="status-msg">{searchResults.length} result{searchResults.length !== 1 ? 's' : ''} found</p>
+            )}
+
             <div className={`listing-grid ${!isLoggedIn ? 'blurred' : ''}`}>
-                {listings.map(listing => (
-                    <ListingCard 
+                {displayListings.map(listing => (
+                    <ListingCard
                         key={listing._id}
                         title={listing.title}
                         price={listing.price}
@@ -47,10 +55,11 @@
                     />
                 ))}
             </div>
+
             {!isLoggedIn && (
                 <div className="login-prompt">
                     <p>Sign in to view listings</p>
-                    <a href='/login'>Login</a>
+                    <Link to='/login'><p className="login-btn">Login</p></Link>
                 </div>
             )}
 
