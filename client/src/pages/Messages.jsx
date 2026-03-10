@@ -42,6 +42,7 @@ export default function Messages() {
 
   const socketRef = useRef(null);
   const bottomRef = useRef(null);
+  const activeConversationIdRef = useRef(activeConversationId);
 
   const isDraft = !activeConversationId && Boolean(draftToUser);
   const showEmptyState = !activeConversationId && !isDraft;
@@ -99,9 +100,21 @@ export default function Messages() {
     }
   };
 
+  const upsertMessage = (msg) => {
+    if (!msg?._id) return;
+    setMessages((prev) => {
+      if (prev.some((m) => m?._id === msg._id)) return prev;
+      return [...prev, msg];
+    });
+  };
+
   useEffect(() => {
     setActiveConversationId(conversationIdParam);
   }, [conversationIdParam]);
+
+  useEffect(() => {
+    activeConversationIdRef.current = activeConversationId;
+  }, [activeConversationId]);
 
   useEffect(() => {
     fetchConversations();
@@ -123,8 +136,8 @@ export default function Messages() {
 
     socket.on("message:new", (msg) => {
       if (!msg?.conversation) return;
-      if (msg.conversation !== activeConversationId) return;
-      setMessages((prev) => [...prev, msg]);
+      if (msg.conversation !== activeConversationIdRef.current) return;
+      upsertMessage(msg);
     });
 
     return () => {
@@ -132,13 +145,16 @@ export default function Messages() {
       socketRef.current = null;
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [token, activeConversationId]);
+  }, [token]);
 
   useEffect(() => {
     if (!activeConversationId) {
       setMessages([]);
       return;
     }
+
+    // Ensure we have the latest sidebar ordering even if we opened via URL.
+    fetchConversations();
 
     socketRef.current?.emit("conversation:join", activeConversationId);
     fetchMessages(activeConversationId);
@@ -190,13 +206,12 @@ export default function Messages() {
       setComposer("");
 
       if (!activeConversationId && createdConversationId) {
+        if (msg) upsertMessage(msg);
         // draft -> real conversation
         navigate(`/messages?conversation=${encodeURIComponent(createdConversationId)}`, { replace: true });
       }
 
-      if (activeConversationId && msg) {
-        setMessages((prev) => [...prev, msg]);
-      }
+      // For existing conversations, rely on the socket event to append (prevents duplicates).
     } catch (err) {
       setMessageError(err?.message || "Failed to send message");
     } finally {
@@ -297,7 +312,7 @@ export default function Messages() {
               <div className="messages-composer">
                 <input
                   className="messages-input"
-                  placeholder="iMessage"
+                  placeholder="Message…"
                   value={composer}
                   onChange={(e) => setComposer(e.target.value)}
                   onKeyDown={(e) => {

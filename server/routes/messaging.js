@@ -150,10 +150,24 @@ router.post("/:conversationId", authenticateToken, async (req, res) => {
         //Update Conversation's Last Message
         const current_time = new Date()
 
-        await Conversation.findByIdAndUpdate(conversationId,
+        const updatedConversation = await Conversation.findByIdAndUpdate(conversationId,
             { $set: { lastMessageText: newMessage.content, lastMessageAt: current_time } },
             { new: true, runValidators: true },
         );
+
+        // Emit realtime updates for clients that still use this legacy endpoint.
+        if (updatedConversation) {
+            const other = updatedConversation.participants.find(
+                (p) => p.toString() !== sender.toString()
+            );
+            if (other) {
+                emitConversationUpsert(req, {
+                    conversation: updatedConversation,
+                    message: savedMessage,
+                    recipientId: other.toString(),
+                });
+            }
+        }
 
         res.status(201).json(savedMessage)
 
