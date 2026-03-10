@@ -63,7 +63,16 @@
                 </div>
             )}
 
-            <ListingModal listing={selected} onClose={() => setSelected(null)} />
+            <ListingModal
+                listing={selected}
+                onClose={() => setSelected(null)}
+                onDeleted={(deletedId) => {
+                    setListings((prev) =>
+                        prev.filter((l) => (l._id || l.id) !== deletedId)
+                    );
+                    setSelected(null);
+                }}
+            />
         </div>
     );
  }
