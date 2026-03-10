@@ -13,6 +13,8 @@
   "dependencies": {
     "cloudinary": "^2.9.0",
     "multer": "^2.1.1",
+    "mongoose": "^9.2.4",
+    "react": "^19.2.4",
     "swiper": "^12.1.2"
   }
 }
