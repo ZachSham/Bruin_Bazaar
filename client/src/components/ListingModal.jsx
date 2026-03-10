@@ -3,7 +3,7 @@ import "./ListingModal.css";
 import { useState } from "react";
 import Carousel from './Carousel.jsx';
 import { useAuth } from "../context/AuthContext";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Profile from "./Profile.jsx";
 
 const API_URL = "http://localhost:3000";
@@ -24,6 +24,7 @@ function ListingModal({ listing, onClose, onDeleted, onUpdated }) {
     const [isSaving, setIsSaving] = useState(false);
     const [editError, setEditError] = useState("");
     const { token } = useAuth();
+    const navigate = useNavigate();
 
     const listingId = listing?._id || listing?.id;
     const currentUserId = localStorage.getItem("userId");
@@ -156,7 +157,18 @@ function ListingModal({ listing, onClose, onDeleted, onUpdated }) {
                 <Carousel images={listing.images || []} />
                 {/*<img src={listing.images[0]} alt={listing.title} />*/}
                 <div className="buttons">
-                    {!isOwner && <button className="message">Message</button>}
+                    {!isOwner && (
+                      <button
+                        className="message"
+                        onClick={() => {
+                          if (!sellerId || !listingId) return;
+                          navigate(`/messages?toUser=${encodeURIComponent(sellerId)}&listing=${encodeURIComponent(listingId)}`);
+                          onClose?.();
+                        }}
+                      >
+                        Message
+                      </button>
+                    )}
                     {isOwner && (
                       <>
                         <button
