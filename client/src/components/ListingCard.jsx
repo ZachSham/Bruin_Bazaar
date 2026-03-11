@@ -1,10 +1,11 @@
 import React from "react";
 import './ListingCard.css';
 
-function ListingCard({title, price, description, seller, images = [], onClick}) {
+function ListingCard({title, price, description, seller, images = [], sold, onClick}) {
     const imageUrl = images?.length > 0 ? images[0] : 'https://placehold.co/300x200?text=No+Image';
     return (
-        <div className="listing-item" onClick={onClick}>
+        <div className={`listing-item ${sold ? 'sold' : ''}`} onClick={onClick}>
+            {sold && <div className="sold-overlay">SOLD</div>}
             <div className="listing-img">
                 <img src={imageUrl} alt={title} />
             </div>
