@@ -104,11 +104,10 @@ function Profile({ children, userId }) {
               title={listing.title}
               price={listing.price}
               images={listing.images}
+              sold={listing.sold}
               onClick={() =>
                 setSelected({
                   ...listing,
-                  // Keep `seller` as the seller id for ownership checks.
-                  // Provide a separate readable name for display.
                   sellerName: user.username,
                 })
               }
