@@ -1,6 +1,7 @@
 import React from "react";
 import './SearchBar.css';
 import { useState } from "react";
+import { API_URL } from "../config";
 
 function SearchBar({onResults, onClear}) {
     const [query, setQuery] = useState("");
@@ -10,7 +11,7 @@ function SearchBar({onResults, onClear}) {
         if (!query.trim()) return;
 
         try {
-            const res = await fetch(`http://localhost:3000/listings/search?q=${encodeURIComponent(query)}`);
+            const res = await fetch(`${API_URL}/listings/search?q=${encodeURIComponent(query)}`);
             if (!res.ok) throw new Error("Search failed");
             const data = await res.json();
             onResults(data);

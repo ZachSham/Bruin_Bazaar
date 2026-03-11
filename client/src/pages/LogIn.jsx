@@ -1,10 +1,11 @@
 import React from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './Login.css';
+import './LogIn.css';
 import Header from '../components/Header';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { API_URL } from '../config';
 
 function LogIn() {
 
@@ -24,7 +25,7 @@ function LogIn() {
         e.preventDefault();
         setError(null);
         try {
-            const res = await fetch('http://localhost:3000/auth/login', {
+            const res = await fetch(`${API_URL}/auth/login`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData)

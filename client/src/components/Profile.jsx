@@ -2,13 +2,13 @@ import React, { useEffect, useState } from "react";
 import "./Profile.css";
 import ListingCard from "./ListingCard";
 import ListingModal from "./ListingModal";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-
-const API_URL = "http://localhost:3000";
+import { API_URL } from "../config";
 
 function Profile({ children, userId }) {
   const { token } = useAuth();
+  const navigate = useNavigate();
 
   const [user, setUser] = useState(null); // { username, email }
   const [listings, setListings] = useState([]);
@@ -86,7 +86,17 @@ function Profile({ children, userId }) {
           {children}
         </div>
         <div className="profile-buttons">
-          <button className="message">Message</button>
+          {!isOwnProfile && (
+            <button
+              className="message"
+              onClick={() => {
+                if (!userId) return;
+                navigate(`/messages?toUser=${encodeURIComponent(userId)}`);
+              }}
+            >
+              Message
+            </button>
+          )}
           {isOwnProfile && (
             <Link to="/create">
                 <button className="create-listing">Create Listing</button>
