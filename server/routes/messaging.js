@@ -83,9 +83,9 @@ router.post("/send", authenticateToken, async (req, res) => {
                 listingObjectId = new mongoose.Types.ObjectId(listingId);
             }
 
+            // One conversation per (user1, user2) - ignore listing so profile and listing Message open same thread
             conversation = await Conversation.findOne({
                 participants: { $all: [senderId, resolvedRecipientId] },
-                listing: listingObjectId,
             });
 
             if (!conversation) {

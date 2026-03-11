@@ -24,7 +24,6 @@ export default function Messages() {
 
   const conversationIdParam = query.get("conversation") || "";
   const draftToUser = query.get("toUser") || "";
-  const draftListing = query.get("listing") || "";
 
   const me = localStorage.getItem("userId");
 
@@ -115,6 +114,19 @@ export default function Messages() {
     activeConversationIdRef.current = activeConversationId;
   }, [activeConversationId]);
 
+  // If we landed with toUser (draft params) but a conversation already exists, redirect to it.
+  // Match by other user only - same conversation whether from listing or profile.
+  useEffect(() => {
+    if (!draftToUser || conversationIdParam || loadingConvos) return;
+    const match = conversations.find((c) => {
+      const otherId = c.otherUser?._id?.toString();
+      return otherId === draftToUser;
+    });
+    if (match) {
+      navigate(`/messages?conversation=${encodeURIComponent(match._id)}`, { replace: true });
+    }
+  }, [conversations, loadingConvos, draftToUser, conversationIdParam, navigate]);
+
   useEffect(() => {
     fetchConversations();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -182,7 +194,7 @@ export default function Messages() {
     try {
       const body = activeConversationId
         ? { conversationId: activeConversationId, content: text }
-        : { recipientId: draftToUser, listingId: draftListing, content: text };
+        : { recipientId: draftToUser, content: text };
 
       const res = await fetch(`${API_URL}/messages/send`, {
         method: "POST",
@@ -277,9 +289,6 @@ export default function Messages() {
                 <div className="messages-thread-title">
                   {activeOtherUser?.username || "Conversation"}
                 </div>
-                {isDraft && draftListing ? (
-                  <div className="messages-thread-subtitle">About a listing</div>
-                ) : null}
               </div>
 
               <div className="messages-thread-body">

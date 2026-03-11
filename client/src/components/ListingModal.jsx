@@ -161,8 +161,8 @@ function ListingModal({ listing, onClose, onDeleted, onUpdated }) {
                       <button
                         className="message"
                         onClick={() => {
-                          if (!sellerId || !listingId) return;
-                          navigate(`/messages?toUser=${encodeURIComponent(sellerId)}&listing=${encodeURIComponent(listingId)}`);
+                          if (!sellerId) return;
+                          navigate(`/messages?toUser=${encodeURIComponent(sellerId)}`);
                           onClose?.();
                         }}
                       >
