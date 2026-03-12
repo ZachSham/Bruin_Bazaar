@@ -125,7 +125,7 @@ function Profile({ children, userId }) {
             />
           ))}
 
-          {listings.length === 0 && <p>No listings yet. Create one!</p>}
+          {listings.length === 0 && <p>No listings yet.{isOwnProfile && " Create one!"}</p>}
         </div>
       </div>
 

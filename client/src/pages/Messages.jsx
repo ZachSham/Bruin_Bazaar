@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { io } from "socket.io-client";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, Link } from "react-router-dom";
 import Header from "../components/Header";
 import { useAuth } from "../context/AuthContext";
 import { API_URL } from "../config";
@@ -287,7 +287,13 @@ export default function Messages() {
             <>
               <div className="messages-thread-header">
                 <div className="messages-thread-title">
-                  {activeOtherUser?.username || "Conversation"}
+                  {activeOtherUser?._id ? (
+                    <Link to={`/profile/${activeOtherUser._id}`} className="messages-username-link">
+                      {activeOtherUser.username || "Conversation"}
+                    </Link>
+                  ) : (
+                    activeOtherUser?.username || "Conversation"
+                  )}
                 </div>
               </div>
 
