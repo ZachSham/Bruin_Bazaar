@@ -23,6 +23,8 @@ function ListingModal({ listing, onClose, onDeleted, onUpdated }) {
     });
     const [isSaving, setIsSaving] = useState(false);
     const [editError, setEditError] = useState("");
+    const [isMarkingSold, setIsMarkingSold] = useState(false);
+    const [soldError, setSoldError] = useState(null);
     const { token } = useAuth();
     const navigate = useNavigate();
 
@@ -90,6 +92,28 @@ function ListingModal({ listing, onClose, onDeleted, onUpdated }) {
       } finally {
         setIsDeleting(false);
         setShowDeleteConfirm(false);
+      }
+    };
+
+    const handleMarkSold = async () => {
+      if (!listingId || !token) return;
+      try {
+        setIsMarkingSold(true);
+        setSoldError(null);
+        const res = await fetch(`${API_URL}/listings/${listingId}/listing_sold`, {
+          method: "PATCH",
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        if (!res.ok) {
+          const data = await res.json().catch(() => ({}));
+          throw new Error(data.message || "Failed to mark as sold");
+        }
+        const updatedListing = { ...listing, sold: true };
+        onUpdated?.(updatedListing);
+      } catch (err) {
+        setSoldError(err?.message || "Failed to mark as sold");
+      } finally {
+        setIsMarkingSold(false);
       }
     };
 
@@ -171,6 +195,15 @@ function ListingModal({ listing, onClose, onDeleted, onUpdated }) {
                     )}
                     {isOwner && (
                       <>
+                        {!listing.sold && (
+                          <button
+                            className="mark-sold"
+                            onClick={handleMarkSold}
+                            disabled={isMarkingSold}
+                          >
+                            {isMarkingSold ? "Marking..." : "Mark as Sold"}
+                          </button>
+                        )}
                         <button
                           className="edit"
                           onClick={() => setIsEditing(true)}
@@ -190,6 +223,7 @@ function ListingModal({ listing, onClose, onDeleted, onUpdated }) {
                       </>
                     )}
                 </div>
+                {soldError && <p className="delete-error">{soldError}</p>}
                 {showDeleteConfirm && (
                   <div className="delete-confirm" role="dialog" aria-modal="true">
                     <p className="delete-confirm-text">
@@ -313,6 +347,7 @@ function ListingModal({ listing, onClose, onDeleted, onUpdated }) {
                 ) : (
                   <>
                     <h1 className="title">{listing.title}</h1>
+                    {listing.sold && <span className="sold-badge">SOLD</span>}
                     <h2 className="price">${listing.price}</h2>
                     {listing.condition && (
                       <p className="condition">Condition: {listing.condition}</p>
